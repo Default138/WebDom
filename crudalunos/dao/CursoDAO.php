@@ -23,6 +23,7 @@ class CursoDAO {
             $curso = new Curso();
             $curso->setId($row['id']);
             $curso->setNome($row['nome']);
+            $curso->setTurno($row['turno']);
             $cursos[] = $curso;
         }
         return $cursos;

@@ -5,12 +5,12 @@ require_once(__DIR__ . "/Curso.php");
 Class Aluno {
     private ?int $id;
     private ?string $nome;
-    private ?string $idade;
+    private ?int $idade;
     private ?string $estrangeiro;
     private ?Curso $curso;
     
 /*
-    public function __construct(int $id, string $nome, string $idade, string $estrangeiro, Curso $curso) {
+    public function __construct(int $id, string $nome, int $idade, string $estrangeiro, Curso $curso) {
         $this->id = $id;
         $this->nome = $nome;
         $this->idade = $idade;
@@ -60,7 +60,7 @@ Class Aluno {
     /**
      * Get the value of idade
      */
-    public function getIdade(): ?string
+    public function getIdade(): ?int
     {
         return $this->idade;
     }
@@ -68,7 +68,7 @@ Class Aluno {
     /**
      * Set the value of idade
      */
-    public function setIdade(?string $idade): self
+    public function setIdade(?int $idade): self
     {
         $this->idade = $idade;
 
