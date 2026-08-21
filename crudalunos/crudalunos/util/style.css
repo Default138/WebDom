@@ -1,0 +1,241 @@
+/* ==========================================================================
+   Configurações Gerais e Reset
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container centralizado para envolver o conteúdo */
+main, .container {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Títulos e Links Gerais
+   ========================================================================== */
+h3 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: #1d6fa5;
+    text-decoration: underline;
+}
+
+/* Link estilizado como botão (ex: Botão "Inserir" ou "Voltar") */
+a[href="inserir.php"], 
+a[href="listar.php"] {
+    display: inline-block;
+    margin-bottom: 15px;
+    padding: 8px 16px;
+    background-color: #27ae60;
+    color: #ffffff;
+    border-radius: 4px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a[href="inserir.php"]:hover, 
+a[href="listar.php"]:hover {
+    background-color: #219150;
+    text-decoration: none;
+}
+
+/* Botão Cancelar/Voltar específico dentro de formulários */
+form a[href="listar.php"] {
+    background-color: #95a5a6;
+    margin-left: 10px;
+    margin-bottom: 0;
+}
+
+form a[href="listar.php"]:hover {
+    background-color: #7f8c8d;
+}
+
+/* ==========================================================================
+   Alertas e Mensagens de Feedback
+   ========================================================================== */
+/* Substitui os estilos inline para mensagens de erro/sucesso */
+div[style*="color: red"],
+div[style*="border: 1px solid red"] {
+    background-color: #f8d7da !important;
+    color: #721c24 !important;
+    border: 1px solid #f5c6cb !important;
+    padding: 12px 15px !important;
+    border-radius: 4px;
+    margin-bottom: 20px !important;
+}
+
+div[style*="color: green"],
+div[style*="border: 1px solid green"] {
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    border: 1px solid #c3e6cb !important;
+    padding: 12px 15px !important;
+    border-radius: 4px;
+    margin-bottom: 20px !important;
+}
+
+/* ==========================================================================
+   Formulários (inserir.php e editar.php)
+   ========================================================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 500px;
+    margin-bottom: 15px;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Div contendo botões fica alinhada na horizontal */
+form > div:last-child {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+
+label {
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    background-color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+button[type="submit"] {
+    padding: 9px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* ==========================================================================
+   Tabela de Listagem (listar.php)
+   ========================================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: none !important; /* Sobrescreve o border="1" da tag HTML */
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #475569;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Alinhamento central para ID e Ações */
+td:first-child,
+th:first-child,
+td:last-child,
+th:last-child {
+    text-align: center;
+}
+
+/* Ícones de ação (Editar / Excluir) */
+td a img {
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    vertical-align: middle;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+td a img:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Ajustes Responsivos (Telas Menores)
+   ========================================================================== */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    main, .container {
+        padding: 15px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
