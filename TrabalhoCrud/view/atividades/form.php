@@ -18,7 +18,7 @@ if (!isset($msgErro)) $msgErro = "";
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" 
                placeholder="Informe o título" 
-               value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>" required>
+               value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>">
     </div>
     <div>
         <label for="descricao">Descrição:</label>
@@ -27,11 +27,11 @@ if (!isset($msgErro)) $msgErro = "";
     <div>
         <label for="data_entrega">Data de Entrega:</label>
         <input type="date" id="data_entrega" name="data_entrega" 
-               value="<?= $tarefa ? $tarefa->getDataEntrega() : '' ?>" required>
+               value="<?= $tarefa ? $tarefa->getDataEntrega() : '' ?>">
     </div>
     <div>
         <label for="prioridade_id">Prioridade:</label>
-        <select id="prioridade_id" name="prioridade_id" required>
+        <select id="prioridade_id" name="prioridade_id">
             <option value="">Selecione</option>
             <?php foreach($prioridades as $p): ?>
                 <option value="<?= $p->getId() ?>" 
@@ -43,7 +43,7 @@ if (!isset($msgErro)) $msgErro = "";
     </div>
     <div>
         <label for="tema_id">Tema:</label>
-        <select id="tema_id" name="tema_id" required>
+        <select id="tema_id" name="tema_id">
             <option value="">Selecione</option>
             <?php foreach($temas as $t): ?>
                 <option value="<?= $t->getId() ?>" 
