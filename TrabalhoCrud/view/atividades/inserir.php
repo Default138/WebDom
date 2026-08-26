@@ -13,14 +13,12 @@ $msgErro = "";
 $tarefa = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Captura dados
     $titulo = trim($_POST['titulo']) ?: null;
     $descricao = trim($_POST['descricao']) ?: null;
     $data_entrega = trim($_POST['data_entrega']) ?: null;
     $prioridade_id = is_numeric($_POST['prioridade_id']) ? (int)$_POST['prioridade_id'] : null;
     $tema_id = is_numeric($_POST['tema_id']) ? (int)$_POST['tema_id'] : null;
 
-    // Monta objeto Tarefa
     $tarefa = new Tarefa();
     $tarefa->setTitulo($titulo);
     $tarefa->setDescricao($descricao);
@@ -45,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Buscar prioridades e temas para os selects
 require_once(__DIR__ . "/../../controller/PrioridadeController.php");
 require_once(__DIR__ . "/../../controller/TemaController.php");
 
@@ -54,6 +51,12 @@ $temasCont = new TemaController();
 $prioridades = $prioridadeCont->listar();
 $temas = $temasCont->listar();
 
-// Inclui o formulário
+// 1. Inclui o cabeçalho (Bootstrap)
+require_once(__DIR__ . "/../include/header.php");
+
+// 2. Inclui o formulário
 require_once(__DIR__ . "/form.php");
+
+// 3. Inclui o rodapé
+require_once(__DIR__ . "/../include/footer.php");
 ?>

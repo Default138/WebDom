@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', '/Camargo/Ling_Prog/crudalunos/');
+define('BASE_URL', '/Camargo/Ling_Prog/TrabalhoCrud/');
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
