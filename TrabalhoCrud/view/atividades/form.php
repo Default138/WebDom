@@ -5,56 +5,72 @@ if (!isset($tarefa)) $tarefa = null;
 if (!isset($msgErro)) $msgErro = "";
 ?>
 
-<h3><?= $tarefa ? 'Editar' : 'Inserir' ?> Tarefa</h3>
+<div class="container mt-4" style="max-width: 700px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title mb-4"><?= $tarefa ? '✏️ Editar' : '➕ Inserir' ?> Tarefa</h3>
 
-<?php if ($msgErro): ?>
-    <div style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px;">
-        <?= $msgErro ?>
-    </div>
-<?php endif; ?>
+            <?php if ($msgErro): ?>
+                <div class="alert alert-danger">
+                    <?= $msgErro ?>
+                </div>
+            <?php endif; ?>
 
-<form method="POST" action="">
-    <div>
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" 
-               placeholder="Informe o título" 
-               value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>">
+            <form method="POST" action="">
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo"
+                           placeholder="Informe o título"
+                           value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                              placeholder="Descreva a atividade"><?= $tarefa ? htmlspecialchars($tarefa->getDescricao()) : '' ?></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="data_entrega" class="form-label">Data de Entrega</label>
+                    <input type="date" class="form-control" id="data_entrega" name="data_entrega"
+                           value="<?= $tarefa ? $tarefa->getDataEntrega() : '' ?>" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="prioridade_id" class="form-label">Prioridade</label>
+                        <select class="form-select" id="prioridade_id" name="prioridade_id" required>
+                            <option value="">Selecione</option>
+                            <?php foreach($prioridades as $p): ?>
+                                <option value="<?= $p->getId() ?>"
+                                    <?= ($tarefa && $tarefa->getPrioridade() && $p->getId() == $tarefa->getPrioridade()->getId()) ? 'selected' : '' ?>>
+                                    <?= $p->getNome() ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="tema_id" class="form-label">Tema</label>
+                        <select class="form-select" id="tema_id" name="tema_id" required>
+                            <option value="">Selecione</option>
+                            <?php foreach($temas as $t): ?>
+                                <option value="<?= $t->getId() ?>"
+                                    <?= ($tarefa && $tarefa->getTema() && $t->getId() == $tarefa->getTema()->getId()) ? 'selected' : '' ?>>
+                                    <?= $t->getNome() ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <?= $tarefa ? 'Atualizar' : 'Gravar' ?>
+                    </button>
+                    <a href="listar.php" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" rows="3" placeholder="Descreva a atividade"><?= $tarefa ? htmlspecialchars($tarefa->getDescricao()) : '' ?></textarea>
-    </div>
-    <div>
-        <label for="data_entrega">Data de Entrega:</label>
-        <input type="date" id="data_entrega" name="data_entrega" 
-               value="<?= $tarefa ? $tarefa->getDataEntrega() : '' ?>">
-    </div>
-    <div>
-        <label for="prioridade_id">Prioridade:</label>
-        <select id="prioridade_id" name="prioridade_id">
-            <option value="">Selecione</option>
-            <?php foreach($prioridades as $p): ?>
-                <option value="<?= $p->getId() ?>" 
-                    <?= ($tarefa && $tarefa->getPrioridade() && $p->getId() == $tarefa->getPrioridade()->getId()) ? 'selected' : '' ?>>
-                    <?= $p->getNome() ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <label for="tema_id">Tema:</label>
-        <select id="tema_id" name="tema_id">
-            <option value="">Selecione</option>
-            <?php foreach($temas as $t): ?>
-                <option value="<?= $t->getId() ?>" 
-                    <?= ($tarefa && $tarefa->getTema() && $t->getId() == $tarefa->getTema()->getId()) ? 'selected' : '' ?>>
-                    <?= $t->getNome() ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <button type="submit"><?= $tarefa ? 'Atualizar' : 'Gravar' ?></button>
-        <a href="listar.php">Cancelar</a>
-    </div>
-</form>
+</div>

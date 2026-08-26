@@ -5,7 +5,7 @@ require_once(__DIR__ . "/../../model/Prioridade.php");
 require_once(__DIR__ . "/../../model/Tema.php");
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<p>ID da tarefa não informado ou inválido.</p>";
+    echo "<div class='container mt-4'><div class='alert alert-danger'>ID da tarefa não informado ou inválido.</div></div>";
     exit;
 }
 
@@ -14,7 +14,7 @@ $controller = new TarefaController();
 $tarefa = $controller->buscarPorId($id);
 
 if (!$tarefa) {
-    echo "<p>Tarefa não encontrada.</p>";
+    echo "<div class='container mt-4'><div class='alert alert-warning'>Tarefa não encontrada.</div></div>";
     exit;
 }
 
@@ -52,56 +52,71 @@ $temas = $temaCont->listar();
 require_once(__DIR__ . "/../include/header.php");
 ?>
 
-<h3>✏️ Editar Tarefa</h3>
+<div class="container mt-4" style="max-width: 700px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title mb-4">✏️ Editar Tarefa</h3>
 
-<?php if (!empty($erros)): ?>
-    <div style="color: red;">
-        <?php foreach($erros as $erro): ?>
-            <p><?= $erro ?></p>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+            <?php if (!empty($erros)): ?>
+                <div class="alert alert-danger">
+                    <?php foreach($erros as $erro): ?>
+                        <div><?= $erro ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
-<form method="POST" action="editar.php?id=<?= $id ?>">
-    <div>
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" value="<?= htmlspecialchars($tarefa->getTitulo()) ?>" required>
+            <form method="POST" action="editar.php?id=<?= $id ?>">
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo"
+                           value="<?= htmlspecialchars($tarefa->getTitulo()) ?>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3"><?= htmlspecialchars($tarefa->getDescricao()) ?></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="data_entrega" class="form-label">Data de Entrega</label>
+                    <input type="date" class="form-control" id="data_entrega" name="data_entrega"
+                           value="<?= $tarefa->getDataEntrega() ?>" required>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="prioridade_id" class="form-label">Prioridade</label>
+                        <select class="form-select" id="prioridade_id" name="prioridade_id" required>
+                            <option value="">Selecione</option>
+                            <?php foreach($prioridades as $p): ?>
+                                <option value="<?= $p->getId() ?>" <?= ($p->getId() == $tarefa->getPrioridade()->getId()) ? 'selected' : '' ?>>
+                                    <?= $p->getNome() ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="tema_id" class="form-label">Tema</label>
+                        <select class="form-select" id="tema_id" name="tema_id" required>
+                            <option value="">Selecione</option>
+                            <?php foreach($temas as $t): ?>
+                                <option value="<?= $t->getId() ?>" <?= ($t->getId() == $tarefa->getTema()->getId()) ? 'selected' : '' ?>>
+                                    <?= $t->getNome() ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="listar.php" class="btn btn-outline-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" name="descricao" rows="3"><?= htmlspecialchars($tarefa->getDescricao()) ?></textarea>
-    </div>
-    <div>
-        <label for="data_entrega">Data de Entrega:</label>
-        <input type="date" id="data_entrega" name="data_entrega" value="<?= $tarefa->getDataEntrega() ?>" required>
-    </div>
-    <div>
-        <label for="prioridade_id">Prioridade:</label>
-        <select id="prioridade_id" name="prioridade_id" required>
-            <option value="">Selecione</option>
-            <?php foreach($prioridades as $p): ?>
-                <option value="<?= $p->getId() ?>" <?= ($p->getId() == $tarefa->getPrioridade()->getId()) ? 'selected' : '' ?>>
-                    <?= $p->getNome() ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <label for="tema_id">Tema:</label>
-        <select id="tema_id" name="tema_id" required>
-            <option value="">Selecione</option>
-            <?php foreach($temas as $t): ?>
-                <option value="<?= $t->getId() ?>" <?= ($t->getId() == $tarefa->getTema()->getId()) ? 'selected' : '' ?>>
-                    <?= $t->getNome() ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <button type="submit">Salvar</button>
-        <a href="listar.php">Cancelar</a>
-    </div>
-</form>
+</div>
 
 <?php
 require_once(__DIR__ . "/../include/footer.php");

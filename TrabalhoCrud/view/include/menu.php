@@ -1,5 +1,4 @@
 <?php
-// menu.php - não precisa de mudanças, mas vou garantir que o link Início use BASE_URL
 ?>
 <nav style="background: #2c3e50; padding: 12px 20px; border-radius: 6px; margin-bottom: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
@@ -9,7 +8,6 @@
             </a>
         </div>
 
-        <!-- Itens do Menu -->
         <ul style="list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap;">
             <li>
                 <a href="<?= defined('BASE_URL') ? BASE_URL : '/' ?>" 
