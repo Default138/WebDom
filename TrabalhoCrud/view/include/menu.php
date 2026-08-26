@@ -1,6 +1,6 @@
 <?php
+// menu.php - não precisa de mudanças, mas vou garantir que o link Início use BASE_URL
 ?>
-
 <nav style="background: #2c3e50; padding: 12px 20px; border-radius: 6px; margin-bottom: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <div>
@@ -30,28 +30,3 @@
         </ul>
     </div>
 </nav>
-
-<style>
-    /* Menu responsivo */
-    @media (max-width: 600px) {
-        nav > div {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 10px;
-        }
-        
-        nav ul {
-            justify-content: center;
-        }
-        
-        nav ul li a {
-            display: block;
-            text-align: center;
-            padding: 8px 12px !important;
-        }
-        
-        nav > div > div {
-            text-align: center;
-        }
-    }
-</style>

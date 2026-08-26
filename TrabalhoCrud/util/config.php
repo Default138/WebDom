@@ -11,7 +11,7 @@ define("DB_USER", "root");
 define("DB_PASSWORD", "");
 
 //configuração ambiente
-define("AMB_DEV", false);
+define("AMB_DEV", true);
 
 //URL base do projeto (usada no menu.php para montar os links)
-define("BASE_URL", "/Camargo/Ling_Prog/crudalunos/");
+define("BASE_URL", __DIR__."/TrabalhoCrud/");

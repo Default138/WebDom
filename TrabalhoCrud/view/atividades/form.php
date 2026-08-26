@@ -1,68 +1,60 @@
 <?php
-
-require_once(__DIR__ . "/../../controller/CursoController.php");
-
-$cursoCont = new CursoController();
-$cursos = $cursoCont->listar();
-//print_r($cursos);
-
-require_once(__DIR__ . "/../include/header.php");
+// Este formulário é incluído por inserir.php
+// Espera as variáveis: $tarefa (opcional), $prioridades, $temas, $msgErro
+if (!isset($tarefa)) $tarefa = null;
+if (!isset($msgErro)) $msgErro = "";
 ?>
 
-<h3>Inserir aluno</h3>
+<h3><?= $tarefa ? 'Editar' : 'Inserir' ?> Tarefa</h3>
 
-<form action="" method="POST">
-
-    <div>
-        <label for="txtNome">Nome: </label>
-        <input type="text" id="txtNome" name="nome" 
-            placeholder="Informe o nome"
-            value="<?= $aluno != null ? $aluno->getNome() : '' ?>">
+<?php if ($msgErro): ?>
+    <div style="color: red; padding: 10px; border: 1px solid red; margin-bottom: 15px;">
+        <?= $msgErro ?>
     </div>
+<?php endif; ?>
 
+<form method="POST" action="">
     <div>
-        <label for="txtIdade">Idade: </label>
-        <input type="number" id="txtIdade" name="idade" 
-            placeholder="Informe a idade"
-            value="<?= $aluno != null ? $aluno->getIdade() : '' ?>">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" 
+               placeholder="Informe o título" 
+               value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>" required>
     </div>
-
     <div>
-        <label for="selEstrang">Estrangeiro: </label>
-        <select name="estrangeiro" id="selEstrang">
-            <option value="">----Selecione-----</option>
-            <option value="S" <?= $aluno && $aluno->getEstrangeiro() == 'S' ? 'selected' : '' ?>>Sim</option>
-            <option value="N" <?= $aluno && $aluno->getEstrangeiro() == 'N' ? 'selected' : '' ?>>Não</option>
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" name="descricao" rows="3" placeholder="Descreva a atividade"><?= $tarefa ? htmlspecialchars($tarefa->getDescricao()) : '' ?></textarea>
+    </div>
+    <div>
+        <label for="data_entrega">Data de Entrega:</label>
+        <input type="date" id="data_entrega" name="data_entrega" 
+               value="<?= $tarefa ? $tarefa->getDataEntrega() : '' ?>" required>
+    </div>
+    <div>
+        <label for="prioridade_id">Prioridade:</label>
+        <select id="prioridade_id" name="prioridade_id" required>
+            <option value="">Selecione</option>
+            <?php foreach($prioridades as $p): ?>
+                <option value="<?= $p->getId() ?>" 
+                    <?= ($tarefa && $tarefa->getPrioridade() && $p->getId() == $tarefa->getPrioridade()->getId()) ? 'selected' : '' ?>>
+                    <?= $p->getNome() ?>
+                </option>
+            <?php endforeach; ?>
         </select>
     </div>
-
     <div>
-        <label for="selCurso">Curso: </label>
-        <select name="curso" id="selCurso">
-            <option value="">----Selecione-----</option>
-
-            <!-- Cursos criados de forma dinâmica -->
-            <?php foreach($cursos as $c): ?>
-                <option value="<?= $c->getId() ?>"
-                    <?php
-                        if($aluno && $aluno->getCurso() ->getId() == $c->getId()) {
-                            echo "selected";
-                        }
-                    ?>
-                >
-                <?= $c ?></option>        
-            <?php endforeach; ?>    
-
+        <label for="tema_id">Tema:</label>
+        <select id="tema_id" name="tema_id" required>
+            <option value="">Selecione</option>
+            <?php foreach($temas as $t): ?>
+                <option value="<?= $t->getId() ?>" 
+                    <?= ($tarefa && $tarefa->getTema() && $t->getId() == $tarefa->getTema()->getId()) ? 'selected' : '' ?>>
+                    <?= $t->getNome() ?>
+                </option>
+            <?php endforeach; ?>
         </select>
     </div>
-
     <div>
-        <button type="submit">Gravar</button>
+        <button type="submit"><?= $tarefa ? 'Atualizar' : 'Gravar' ?></button>
+        <a href="listar.php">Cancelar</a>
     </div>
 </form>
-
-<a href="listar.php">Voltar</a>
-
-<?php
-require_once(__DIR__ . "/../include/footer.php");
-?>

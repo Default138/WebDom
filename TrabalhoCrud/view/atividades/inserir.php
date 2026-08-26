@@ -1,53 +1,59 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once(__DIR__ . "/../../model/Aluno.php");
-require_once(__DIR__ . "/../../model/Curso.php");
-require_once(__DIR__ . "/../../controller/AlunoController.php");
-require_once(__DIR__ . "/../../service/AlunoService.php");
+require_once(__DIR__ . "/../../model/Tarefa.php");
+require_once(__DIR__ . "/../../model/Prioridade.php");
+require_once(__DIR__ . "/../../model/Tema.php");
+require_once(__DIR__ . "/../../controller/TarefaController.php");
+require_once(__DIR__ . "/../../service/TarefaService.php");
 
 $msgErro = "";
-$aluno = null;
+$tarefa = null;
 
-if(isset($_POST['nome'])) {
-    //captura os dados do formulário
-    $nome = trim($_POST['nome']) ? trim($_POST['nome']) : null;
-    $idade = is_numeric($_POST['idade']) ? (int)$_POST['idade'] : null;
-    $estrang = trim($_POST['estrangeiro']) ? trim($_POST['estrangeiro']) : null;
-    $idCurso = is_numeric($_POST['curso']) ? (int)$_POST['curso'] : null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Captura dados
+    $titulo = trim($_POST['titulo']) ?: null;
+    $descricao = trim($_POST['descricao']) ?: null;
+    $data_entrega = trim($_POST['data_entrega']) ?: null;
+    $prioridade_id = is_numeric($_POST['prioridade_id']) ? (int)$_POST['prioridade_id'] : null;
+    $tema_id = is_numeric($_POST['tema_id']) ? (int)$_POST['tema_id'] : null;
 
-    //cria um objeto aluno
-    $aluno = new Aluno();
-    $aluno->setNome($nome);
-    $aluno->setIdade($idade);
-    $aluno->setEstrangeiro($estrang);
+    // Monta objeto Tarefa
+    $tarefa = new Tarefa();
+    $tarefa->setTitulo($titulo);
+    $tarefa->setDescricao($descricao);
+    $tarefa->setDataEntrega($data_entrega);
 
-    $curso = new Curso();
-    $curso->setId($idCurso);
-    $aluno->setCurso($curso);
+    $prioridade = new Prioridade();
+    $prioridade->setId($prioridade_id);
+    $tarefa->setPrioridade($prioridade);
 
-    print_r($aluno);
-    //valida os dados do formulário
-    
+    $tema = new Tema();
+    $tema->setId($tema_id);
+    $tarefa->setTema($tema);
 
-    //persiste o obejto
-    $alunoController = new AlunoController();
-    $erros = $alunoController->inserir($aluno);
+    $controller = new TarefaController();
+    $erros = $controller->inserir($tarefa);
 
     if (empty($erros)) {
-        echo "<p>Aluno inserido com sucesso!</p>";
+        header("Location: listar.php?msg=Tarefa inserida com sucesso!");
+        exit;
     } else {
-        echo "<p>Ocorreram erros ao inserir o aluno:</p>";
-        echo "<ul>";
-        foreach ($erros as $erro) {
-            echo "<li>$erro</li>";
-        }
-        echo "</ul>";
+        $msgErro = implode('<br>', $erros);
     }
 }
 
+// Buscar prioridades e temas para os selects
+require_once(__DIR__ . "/../../controller/PrioridadeController.php");
+require_once(__DIR__ . "/../../controller/TemaController.php");
+
+$prioridadeCont = new PrioridadeController();
+$temasCont = new TemaController();
+$prioridades = $prioridadeCont->listar();
+$temas = $temasCont->listar();
+
+// Inclui o formulário
 require_once(__DIR__ . "/form.php");
 ?>
