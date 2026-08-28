@@ -11,18 +11,18 @@
 
         <ul style="list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap;">
             <li>
-                <a href="/Camargo/Ling_Prog/TrabalhoCrud/index.php" 
-                   style="color: #ecf0f1; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.1)'" 
-                   onmouseout="this.style.background='transparent'">
+                <a href="/Camargo/Ling_Prog/"
+                    style="color: #ecf0f1; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background 0.3s;"
+                    onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="this.style.background='transparent'">
                     🚪 Sair
                 </a>
             </li>
             <li>
-                <a href="/Camargo/Ling_Prog/TrabalhoCrud/index.php" 
-                   style="color: #ecf0f1; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background 0.3s;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.1)'" 
-                   onmouseout="this.style.background='transparent'">
+                <a href="/Camargo/Ling_Prog/TrabalhoCrud/index.php"
+                    style="color: #ecf0f1; text-decoration: none; padding: 8px 15px; border-radius: 4px; transition: background 0.3s;"
+                    onmouseover="this.style.background='rgba(255,255,255,0.1)'"
+                    onmouseout="this.style.background='transparent'">
                     🏠 Início
                 </a>
             </li>
