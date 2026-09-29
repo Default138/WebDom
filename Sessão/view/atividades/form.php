@@ -21,13 +21,13 @@ if (!isset($msgErro)) $msgErro = "";
                     <label for="titulo" class="form-label">Título</label>
                     <input type="text" class="form-control" id="titulo" name="titulo"
                            placeholder="Informe o título"
-                           value="<?= $tarefa ? htmlspecialchars($tarefa->getTitulo()) : '' ?>" required>
+                           value="<?= $tarefa ? $tarefa->getTitulo() : '' ?>" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
                     <textarea class="form-control" id="descricao" name="descricao" rows="3"
-                              placeholder="Descreva a atividade"><?= $tarefa ? htmlspecialchars($tarefa->getDescricao()) : '' ?></textarea>
+                              placeholder="Descreva a atividade"><?= $tarefa ? $tarefa->getDescricao() : '' ?></textarea>
                 </div>
 
                 <div class="mb-3">
