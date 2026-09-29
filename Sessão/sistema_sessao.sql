@@ -1,9 +1,0 @@
-CREATE DATABASE IF NOT EXISTS sistema_sessao;
-USE sistema_sessao;
-
-CREATE TABLE IF NOT EXISTS logs_sessao (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    acao VARCHAR(50) NOT NULL,
-    valor VARCHAR(255) NULL,
-    data_hora DATETIME DEFAULT CURRENT_TIMESTAMP
-);
