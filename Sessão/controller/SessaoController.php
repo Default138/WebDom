@@ -22,7 +22,7 @@ class SessaoController {
             $valor = trim($_POST['valor'] ?? '');
 
             switch ($acao) {
-                case 'criar': // a) Criar valor na sessão
+                case 'criar': //Criar valor na sessão
                     if (isset($_SESSION['valor_sessao'])) {
                         $mensagem = 'Erro: A sessão já foi criada! Utilize a opção de alterar.';
                         $tipoMensagem = 'danger';
@@ -39,7 +39,7 @@ class SessaoController {
                     }
                     break;
 
-                case 'alterar': // b) Alterar o valor da sessão
+                case 'alterar': //Alterar o valor da sessão
                     if (!isset($_SESSION['valor_sessao'])) {
                         $mensagem = 'Erro: A sessão ainda não existe! Crie um valor primeiro.';
                         $tipoMensagem = 'danger';
@@ -57,7 +57,7 @@ class SessaoController {
                     }
                     break;
 
-                case 'remover': // c) Remover a sessão
+                case 'remover': //Remover a sessão (usei o destroy)
                     session_unset();
                     session_destroy();
                     $_SESSION = [];
@@ -68,7 +68,7 @@ class SessaoController {
             }
         }
 
-        // d) Exibir status e buscar logs
+        //Exibir status e buscar logs
         $sessaoExiste = isset($_SESSION['valor_sessao']);
         $valorSessao = $sessaoExiste ? $_SESSION['valor_sessao'] : null;
         $logs = $this->logDao->listLatest(5);
