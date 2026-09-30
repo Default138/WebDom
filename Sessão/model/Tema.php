@@ -1,8 +1,8 @@
 <?php
 
 class Tema {
-    private ?int $id;
-    private ?string $nome;
+    private ?int $id = null;
+    private ?string $nome = null;
 
     public function getId(): ?int { return $this->id; }
     public function setId(?int $id): self { $this->id = $id; return $this; }

@@ -8,7 +8,7 @@ require_once(__DIR__ . "/../../controller/TarefaController.php");
 $tarefaCont = new TarefaController();
 $tarefas = $tarefaCont->listar();
 
-// Função para mapear o nome do Tema para o arquivo de imagem correto na pasta img
+//Função para mapear o nome do Tema para o arquivo de imagem correto na pasta img
 function obterImagemTema($nomeTema) {
     $nome = mb_strtolower(trim($nomeTema), 'UTF-8');
 

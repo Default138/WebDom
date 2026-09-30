@@ -4,15 +4,16 @@ require_once(__DIR__ . "/Prioridade.php");
 require_once(__DIR__ . "/Tema.php");
 
 class Tarefa {
-    private ?int $id;
-    private ?string $titulo;
-    private ?string $descricao;
-    private ?string $data_entrega; // formato YYYY-MM-DD
-    private ?Prioridade $prioridade;
-    private ?Tema $tema;
-    private ?string $criado_em;
+    //Definimos = null para inicializar os atributos com valor nulo por padrão
+    private ?int $id = null;
+    private ?string $titulo = null;
+    private ?string $descricao = null;
+    private ?string $data_entrega = null; // formato YYYY-MM-DD
+    private ?Prioridade $prioridade = null;
+    private ?Tema $tema = null;
+    private ?string $criado_em = null;
 
-    // Getters e Setters
+    //Getters e Setters
     public function getId(): ?int { return $this->id; }
     public function setId(?int $id): self { $this->id = $id; return $this; }
 
