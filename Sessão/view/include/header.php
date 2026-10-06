@@ -1,11 +1,17 @@
 <?php
-// Calcula dinamicamente a URL base web do projeto
-//Mesma coisa, não me pergunte
+// 1. Define a URL_SISTEMA em primeiro lugar
 if (!defined('URL_SISTEMA')) {
     $docRoot = str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']);
     $projRoot = str_replace('\\', '/', realpath(__DIR__ . '/../../'));
     $webPath = str_replace($docRoot, '', $projRoot);
     define('URL_SISTEMA', rtrim($webPath, '/') . '/');
+}
+
+// 2. Importa o AuthController e faz a verificação de login
+require_once(__DIR__ . "/../../controller/AuthController.php");
+
+if (!str_contains($_SERVER['PHP_SELF'], 'login.php')) {
+    AuthController::verificarAutenticacao();
 }
 ?>
 <!DOCTYPE html>

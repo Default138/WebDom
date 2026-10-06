@@ -19,17 +19,20 @@ class SessaoController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $acao = $_POST['acao'] ?? '';
-            $valor = trim($_POST['valor'] ?? '');
+            $valorEntrada = trim($_POST['valor'] ?? '');
+            $tipoEstrutura = $_POST['tipo_estrutura'] ?? 'string';
 
             switch ($acao) {
-                case 'criar': //Criar valor na sessão
+                case 'criar':
                     if (isset($_SESSION['valor_sessao'])) {
                         $mensagem = 'Erro: A sessão já foi criada! Utilize a opção de alterar.';
                         $tipoMensagem = 'danger';
                     } else {
-                        if ($valor !== '') {
-                            $_SESSION['valor_sessao'] = $valor;
-                            $this->registrarLog('Sessão Criada', $valor);
+                        if ($valorEntrada !== '') {
+                            $valorFinal = $this->prepararValor($valorEntrada, $tipoEstrutura);
+                            $_SESSION['valor_sessao'] = $valorFinal;
+                            
+                            $this->registrarLog('Sessão Criada (' . ucfirst($tipoEstrutura) . ')', $this->formatarParaLog($valorFinal));
                             $mensagem = 'Valor criado na sessão com sucesso!';
                             $tipoMensagem = 'success';
                         } else {
@@ -39,15 +42,17 @@ class SessaoController {
                     }
                     break;
 
-                case 'alterar': //Alterar o valor da sessão
+                case 'alterar':
                     if (!isset($_SESSION['valor_sessao'])) {
                         $mensagem = 'Erro: A sessão ainda não existe! Crie um valor primeiro.';
                         $tipoMensagem = 'danger';
                     } else {
-                        if ($valor !== '') {
-                            $valorAntigo = $_SESSION['valor_sessao'];
-                            $_SESSION['valor_sessao'] = $valor;
-                            $this->registrarLog('Sessão Alterada', "De: '$valorAntigo' | Para: '$valor'");
+                        if ($valorEntrada !== '') {
+                            $valorAntigo = $this->formatarParaLog($_SESSION['valor_sessao']);
+                            $valorFinal = $this->prepararValor($valorEntrada, $tipoEstrutura);
+                            $_SESSION['valor_sessao'] = $valorFinal;
+
+                            $this->registrarLog('Sessão Alterada (' . ucfirst($tipoEstrutura) . ')', "De: '$valorAntigo' | Para: '" . $this->formatarParaLog($valorFinal) . "'");
                             $mensagem = 'Valor da sessão alterado com sucesso!';
                             $tipoMensagem = 'success';
                         } else {
@@ -57,7 +62,7 @@ class SessaoController {
                     }
                     break;
 
-                case 'remover': //Remover a sessão (usei o destroy)
+                case 'remover':
                     session_unset();
                     session_destroy();
                     $_SESSION = [];
@@ -68,7 +73,6 @@ class SessaoController {
             }
         }
 
-        //Exibir status e buscar logs
         $sessaoExiste = isset($_SESSION['valor_sessao']);
         $valorSessao = $sessaoExiste ? $_SESSION['valor_sessao'] : null;
         $logs = $this->logDao->listLatest(5);
@@ -80,6 +84,31 @@ class SessaoController {
             'tipoMensagem' => $tipoMensagem,
             'logs' => $logs
         ];
+    }
+
+    //Converte a entrada do usuário na estrutura desejada (String, Array ou Objeto)
+    private function prepararValor(string $entrada, string $tipo) {
+        if ($tipo === 'array') {
+            //Separa valores por vírgula e transforma em um Vetor (Array)
+            return array_map('trim', explode(',', $entrada));
+        } elseif ($tipo === 'objeto') {
+            //Cria um Objeto stdClass no PHP
+            $obj = new stdClass();
+            $obj->titulo = $entrada;
+            $obj->tipo = "Objeto PHP (stdClass)";
+            $obj->criado_em = date('d/m/Y H:i:s');
+            return $obj;
+        }
+        return $entrada; //String normal
+    }
+
+    private function formatarParaLog($valor): string {
+        if (is_array($valor)) {
+            return "Array: [" . implode(', ', $valor) . "]";
+        } elseif (is_object($valor)) {
+            return "Objeto: " . json_encode($valor, JSON_UNESCAPED_UNICODE);
+        }
+        return (string) $valor;
     }
 
     private function registrarLog(string $acao, ?string $valor) {

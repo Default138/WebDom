@@ -1,9 +1,12 @@
 <?php
-define('BASE_URL', '/Camargo/Ling_Prog/TrabalhoCrud/');
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+
+require_once(__DIR__ . "/controller/AuthController.php");
+
+// 🔒 Trava de Segurança: Redireciona imediatamente para o Login se não estiver autenticado
+AuthController::verificarAutenticacao();
 
 require_once(__DIR__ . "/view/include/header.php");
 ?>
@@ -25,7 +28,6 @@ require_once(__DIR__ . "/view/include/header.php");
                 <i class="bi bi-plus-circle"></i> Inserir Atividade
             </a>
 
-            <!-- NOVO BOTÃO ADICIONADO AQUI -->
             <a href="view/sessao/gerenciar.php" class="btn btn-warning btn-lg text-dark">
                 <i class="bi bi-shield-lock"></i> Gerenciar Sessões
             </a>
