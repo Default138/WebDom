@@ -79,9 +79,40 @@ $cursos = $cursoCont->listar();
     <a href="listar.php" class="btn btn-outline-secondary mt-3">Voltar</a>
 </div>
 
+<script>
+const urlBase = document.getElementById("confUrlBase").dataset.urlBase;
+const selCurso = document.getElementById("selCurso");
+const selDisciplina = document.getElementById("selDisciplina");
+const divMsgErro = document.getElementById("divMsgErro");
+
+async function carregarDisciplinas() {
+    selDisciplina.innerHTML = "";
+    divMsgErro.style.display = "none";
+
+    const idCurso = selCurso.value;
+    if (idCurso == 0) return;
+
+    try {
+        const resp = await fetch(`${urlBase}/api/lista_disciplinas.php?id_curso=${idCurso}`);
+        const disciplinas = await resp.json();
+
+        for (const d of disciplinas) {
+            const opt = document.createElement("option");
+            opt.value = d.id;
+            opt.textContent = d.texto;
+            selDisciplina.appendChild(opt);
+        }
+    } catch (e) {
+        divMsgErro.textContent = "Erro ao carregar as disciplinas.";
+        divMsgErro.style.display = "block";
+    }
+}
+
+selCurso.addEventListener("change", carregarDisciplinas);
+carregarDisciplinas(); // carrega já na abertura, se houver curso selecionado
+</script>
 
 <?php 
 //Inclui o FOOTER
 require_once(__DIR__ . "/../include/footer.php");
 ?>
-
